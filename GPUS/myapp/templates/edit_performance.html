@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Modifier Performance{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Modifier Performance pour {{ year }}/{{ month }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <a href="{% url 'performance_daily' year=year month=month %}" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+{% endblock %}

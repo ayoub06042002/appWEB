@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Rapport mensuel de performance d'Usine de Séchage{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Rapport mensuel de performance d'Usine de Séchage</h2>
+
+    <!-- Formulaire de filtre -->
+    <form method="GET" action="{% url 'performance' %}">
+        <div class="row align-items-end mb-3">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="month">Month:</label>
+                    <select name="month" id="month" class="form-control">
+                        <option value="">All</option>
+                        {% for month_num, month_name in month_choices %}
+                            <option value="{{ month_num }}" {% if month_num|stringformat:"d" == selected_month|stringformat:"d" %}selected{% endif %}>{{ month_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <input type="number" name="year" id="year" class="form-control" min="2000" max="2099" value="{{ selected_year }}">
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-primary me-2">Filter</button>
+                    <a href="{% url 'performance' %}" class="btn btn-secondary me-2">Reset</a>
+                    <a href="{% url 'add_performance' %}" class="btn btn-success">Add Performance</a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+    <!-- Tableau des données de performance -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Year</th>
+                    <th>Total Tonnage Dosage</th>
+                    <th>Total Humidite Entree %</th>
+                    <th>Total Production Totale</th>
+                    <th>Total HM</th>
+                    <th>Total Cs Gas</th>
+                    <th>Total Cs Gazoline</th>
+                    <th>Total Cs Fuel</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in pivot_data %}
+                    <tr>
+                        <td>{{ data.month }}</td>
+                        <td>{{ data.year }}</td>
+                        <td>{{ data.total_Tonnage_dosage|floatformat:2 }}</td>
+                        <td>{{ data.total_Humidite_entree|floatformat:2 }} %</td>
+                        <td>{{ data.total_Production_totale|floatformat:2 }}</td>
+                        <td>{{ data.total_HM|floatformat:2 }}</td>
+                        <td>{{ data.total_Cs_Gas|floatformat:2 }}</td>
+                        <td>{{ data.total_Cs_gazoline|floatformat:2 }}</td>
+                        <td>{{ data.total_Cs_Fuel|floatformat:2 }}</td>
+                        <td>
+                            {% if data.year and data.month %}
+                                <a href="{% url 'performance_daily' year=data.year month=data.month %}" class="btn btn-sm btn-primary">View Daily</a>
+                            {% else %}
+                                <span class="text-muted">N/A</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Daily Performance{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Daily Performance for {{ year }}/{{ month }}</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Tonnage Dosage</th>
+                <th>Humidité Entrée %</th>
+                <th>Production Totale</th>
+                <th>HM</th>
+                <th>Cs Gas</th>
+                <th>Cs Gazoline</th>
+                <th>Cs Fuel</th>
+                <th>Actions</th> <!-- Nouvelle colonne pour les actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for performance in performances %}
+                <tr>
+                    <td>{{ performance.date }}</td>
+                    <td>{{ performance.Tonnage_dosage }}</td>
+                    <td>{{ performance.Humidite_entree }} %</td>
+                    <td>{{ performance.Production_totale }}</td>
+                    <td>{{ performance.HM }}</td>
+                    <td>{{ performance.Cs_Gas }}</td>
+                    <td>{{ performance.Cs_gazoline }}</td>
+                    <td>{{ performance.Cs_Fuel }}</td>
+                    <td>
+                        <div class="d-flex">
+                            <a href="{% url 'edit_performance' year=year month=month performance_id=performance.id %}" class="btn btn-sm btn-primary me-2">Modifier</a>
+                            <form method="POST" action="{% url 'delete_performance' year=year month=month performance_id=performance.id %}" onsubmit="return confirmDelete();">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Boutons supplémentaires -->
+    <div class="mt-3">
+        <a href="{% url 'performance' %}" class="btn btn-secondary">Retour à la page de performance</a>
+        <a href="{% url 'graph_performance' %}?year={{ year }}&month={{ month }}" class="btn btn-info">Voir le graphe de ce mois</a>
+    </div>
+</div>
+
+<script>
+    function confirmDelete() {
+        return confirm("Êtes-vous sûr de vouloir supprimer cette performance ?");
+    }
+</script>
+{% endblock %}

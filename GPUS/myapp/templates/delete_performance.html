@@ -1,0 +1,14 @@
+<!-- delete_performance_confirm.html -->
+
+<h2>Confirmer la suppression de la performance</h2>
+
+<p>Êtes-vous sûr de vouloir supprimer la performance suivante ?</p>
+<p>Nom de la performance : {{ performance.name }}</p>
+<p>Date : {{ performance.date }}</p>
+<!-- Autres détails pertinents -->
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmer la suppression</button>
+    <a href="{% url 'performance_daily' year month %}">Annuler</a>
+</form>

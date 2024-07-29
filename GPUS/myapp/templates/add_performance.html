@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Ajouter Performance{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Ajouter Performance</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Date:</label>
+            <div class="col-sm-10">
+                {{ form.date }}
+                {% if form.date.errors %}
+                    <div class="text-danger">
+                        {{ form.date.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Tonnage Dosage:</label>
+            <div class="col-sm-10">
+                {{ form.Tonnage_dosage }}
+                {% if form.Tonnage_dosage.errors %}
+                    <div class="text-danger">
+                        {{ form.Tonnage_dosage.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Humidité Entrée:</label>
+            <div class="col-sm-10">
+                {{ form.Humidite_entree }}
+                {% if form.Humidite_entree.errors %}
+                    <div class="text-danger">
+                        {{ form.Humidite_entree.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Production Totale:</label>
+            <div class="col-sm-10">
+                {{ form.Production_totale }}
+                {% if form.Production_totale.errors %}
+                    <div class="text-danger">
+                        {{ form.Production_totale.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">HM:</label>
+            <div class="col-sm-10">
+                {{ form.HM }}
+                {% if form.HM.errors %}
+                    <div class="text-danger">
+                        {{ form.HM.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Cs Gas:</label>
+            <div class="col-sm-10">
+                {{ form.Cs_Gas }}
+                {% if form.Cs_Gas.errors %}
+                    <div class="text-danger">
+                        {{ form.Cs_Gas.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Cs Gazoline:</label>
+            <div class="col-sm-10">
+                {{ form.Cs_gazoline }}
+                {% if form.Cs_gazoline.errors %}
+                    <div class="text-danger">
+                        {{ form.Cs_gazoline.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">Cs Fuel:</label>
+            <div class="col-sm-10">
+                {{ form.Cs_Fuel }}
+                {% if form.Cs_Fuel.errors %}
+                    <div class="text-danger">
+                        {{ form.Cs_Fuel.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

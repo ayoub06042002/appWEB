@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Graph Performance{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Graph Performance</h2>
+    <form method="GET">
+        <label for="attribute">Select Attribute:</label>
+        <select name="attribute" id="attribute" onchange="this.form.submit()">
+            <option value="Tonnage_dosage" {% if attribute == 'Tonnage_dosage' %}selected{% endif %}>Tonnage Dosage</option>
+            <option value="Humidite_entree" {% if attribute == 'Humidite_entree' %}selected{% endif %}>Humidité Entrée</option>
+            <option value="Production_totale" {% if attribute == 'Production_totale' %}selected{% endif %}>Production Totale</option>
+            <option value="HM" {% if attribute == 'HM' %}selected{% endif %}>HM</option>
+            <option value="Cs_Gas" {% if attribute == 'Cs_Gas' %}selected{% endif %}>Cs Gas</option>
+            <option value="Cs_gazoline" {% if attribute == 'Cs_gazoline' %}selected{% endif %}>Cs Gazoline</option>
+            <option value="Cs_Fuel" {% if attribute == 'Cs_Fuel' %}selected{% endif %}>Cs Fuel</option>
+        </select>
+        <br><br>
+        <label for="year">Select Year:</label>
+        <select name="year" id="year" onchange="this.form.submit()">
+            <option value="">All Years</option>
+            {% for y in years %}
+                <option value="{{ y.year }}" {% if y.year|stringformat:"s" == selected_year %}selected{% endif %}>{{ y.year }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="month">Select Month:</label>
+        <select name="month" id="month" onchange="this.form.submit()">
+            <option value="">All Months</option>
+            {% for m in months %}
+                <option value="{{ forloop.counter }}" {% if forloop.counter|stringformat:"s" == selected_month %}selected{% endif %}>{{ m }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <div>
+        <img src="data:image/png;base64,{{ plot_data }}" alt="Graph">
+    </div>
+</div>
+{% endblock %}
